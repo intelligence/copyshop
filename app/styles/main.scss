@@ -1,0 +1,362 @@
+// bower:scss
+// endbower
+
+/*
+ * Variables
+ */
+
+$black:   #111111;
+$white:   #fafafa;
+
+
+/*
+ * Font Files
+ */
+
+@font-face {
+  font-family: "BigCaslonRegular";
+
+  src: url("../fonts/BigCaslonRegular.woff") format("woff"), /* Modern Browsers */
+    url("../fonts/BigCaslonRegular.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HaasUnicaRegular";
+
+  src: url("../fonts/HaasUnicaRegular.woff") format("woff"), /* Modern Browsers */
+    url("../fonts/HaasUnicaRegular.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Life";
+
+  src: url("../fonts/Life-Roman.woff") format("woff"), /* Modern Browsers */
+    url("../fonts/Life-Roman.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: $black;
+  font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.325vw;
+  line-height: 1.3;
+  color: $white;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.text--sans-serif {
+  font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+a {
+  color: $black;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.img-fluid {
+  width: 100%;
+  max-width: 100%;
+}
+
+
+.sheets {
+  //margin: 1rem;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  //height: 100%;
+
+  padding: 2rem;
+}
+
+.sheet {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  //background: $white;
+  //color: $black;
+  //padding: 1rem;
+  //margin: 1rem;
+
+  //border: 1px solid red;
+
+  //height:100vm; width:100vm; /* IE9 fallback */
+  //width: 100vmin; height: 100vmin;
+  /*position: absolute;
+  top:0;bottom:0;
+  left:0;right:0;*/
+  //margin: auto;
+
+  &.isHidden {
+    display: none;
+  }
+}
+
+.information,
+.stack {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  width: 50%;
+
+  position: relative;
+}
+
+.sheet--info {
+  justify-content: flex-end;
+  letter-spacing: 1px;
+}
+
+.sheet--publication,
+.sheet--splash {
+  font-family: 'Life', 'Times New Roman', Times, serif;
+  font-variant: lining-nums;
+  line-height: 1.28;
+
+  justify-content: flex-start;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  //transition: transform 0.4s ease-in-out;
+
+  transform-style: preserve-3d;
+
+  &.isCurrent {
+    z-index: 10;
+  }
+
+  &.isMovingOffscreen {
+    z-index: 100;
+    transition: transform 0.4s ease-in-out;
+    transform: translateX(110%) scale(1.05);
+  }
+}
+
+
+
+.sheet__ratio {
+  //background: $white;
+  //color: $black;
+
+  /*height: 0;
+  padding-bottom: 141.51%; // 595*842px 
+  width: 100%;*/
+
+  position: relative;
+
+  .isFlipped & {
+    //transform: rotateY(180deg);
+    //transition: transform 0.5s ease-in-out;
+  }
+
+}
+
+.sheet__inner,
+.sheet__front,
+.sheet__back {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background: $white;
+  color: $black;
+
+  margin: 2rem;
+  padding: 1rem;
+
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+  backface-visibility: hidden;
+
+  /*.isFlipped & {
+    transform: rotateY(180deg);
+    transition: transform 0.5s ease-in-out;
+  }*/
+}
+
+.sheet__front {
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+  transition: transform 0.5s ease-in-out;
+
+  .isFlipped & {
+    transform: rotateY(180deg);
+  }
+}
+
+.sheet__back {
+  transform: rotateY(-180deg);
+  transition: transform 0.5s ease-in-out;
+  font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  .isFlipped & {
+    transform: rotateY(0deg);
+  }
+}
+
+.sheet__content {
+  position: relative;
+  height: 100%;
+
+  .sheet--splash & {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.sheet__top {
+
+}
+
+.sheet__center {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sheet__bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  user-select: none;
+
+  .sheet--publication & {
+    //width: 100%;
+    //text-align: center;
+  }
+}
+
+
+
+/*
+ * Symbols
+ */
+
+.arrow {
+  border: solid black;
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 8px;
+
+  &--down {
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.icon--print {
+  width: 2.25rem;
+}
+
+/*
+ * Buttons
+ */
+
+ .btn--index {
+  cursor: pointer;
+
+  &.isHidden {
+    display: none;
+  }
+ }
+
+ .btn--print {
+  position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+  font-size: 1.2rem;
+  padding: 0 0.75rem;
+
+  &:before {
+    content: '(';
+    //left: -0.85rem;
+    left: 0;
+    top: 9px;
+    position: absolute;
+    
+    font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: 1px;
+  }
+
+  &:after {
+    content: ')';
+    //right: -0.85rem;
+    right: 0;
+    top: 9px;
+    position: absolute;
+
+    font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: 1px;
+  }
+ }
+
+.btn--next {
+  cursor: pointer;
+  font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+}

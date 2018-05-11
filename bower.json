@@ -1,0 +1,12 @@
+{
+  "name": "copyshop-site",
+  "private": true,
+  "dependencies": {
+    "get-size": "^2.0.3",
+    "element-matches": "element-closest#^2.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1"
+  }
+}
