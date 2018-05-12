@@ -221,6 +221,7 @@ function handleInitialLoad() {
 
   setTimeout(function (){
     const splash = document.querySelector('.sheet--splash');
+    const indexBtn = document.querySelector('.js-openIndex');
 
     const currentSheet = splash.closest('.sheet');
     let nextSheet = currentSheet.nextElementSibling;
@@ -229,6 +230,10 @@ function handleInitialLoad() {
     nextSheet.classList.add('isCurrent');
     currentSheet.addEventListener('transitionend', function(event) {
       currentSheet.parentNode.removeChild(currentSheet);
+      indexBtn.classList.remove('isHidden');
+      indexBtn.addEventListener('transitionend', function(event) {
+        indexBtn.classList.remove('fade');
+      }, false);
     }, false);
   }, 2000);
 
