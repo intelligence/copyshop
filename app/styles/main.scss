@@ -109,6 +109,8 @@ a {
   //height: 100%;
 
   padding: 2rem;
+
+  overflow: hidden;
 }
 
 .sheet {
@@ -347,6 +349,10 @@ a {
   &.fade {
     transition: opacity 0.25s ease-in-out;
     display: block!important;
+  }
+
+  &.isNotClickable {
+    pointer-events: none;
   }
 
   &.isHidden {

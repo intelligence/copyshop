@@ -75,10 +75,13 @@ function handlePublicationBrowsing(event) {
 
   currentSheet.classList.add('isMovingOffscreen');
   nextSheet.classList.add('isCurrent');
-  currentSheet.addEventListener('transitionend', function(event) {
+  //currentSheet.addEventListener('transitionend', function(event) {
+  setTimeout(function() {
     currentSheet.classList.remove('isCurrent');
     currentSheet.classList.remove('isMovingOffscreen');
-  }, false);
+  }, 500)
+
+  //}, false);
 
 }
 
@@ -102,7 +105,14 @@ function openIndex() {
   const btns = document.querySelectorAll('.btn--index');
   for (var i = 0; i < btns.length; i++) {
     btns[i].classList.toggle('isHidden');
+
+    setTimeout(function () {
+      document.querySelector('.js-closeIndex').classList.remove('isNotClickable');
+      document.querySelector('.js-openIndex').classList.add('isNotClickable');
+    }, 500);
   }
+
+
 
   const sheets = document.querySelectorAll('.sheet--publication');
 
@@ -132,18 +142,26 @@ function closeIndex() {
   const btns = document.querySelectorAll('.btn--index');
   for (var i = 0; i < btns.length; i++) {
     btns[i].classList.toggle('isHidden');
+
+    setTimeout(function () {
+      document.querySelector('.js-closeIndex').classList.add('isNotClickable');
+      document.querySelector('.js-openIndex').classList.remove('isNotClickable');
+    }, 500);
   }
 
   const sheet = document.querySelector('.sheet--publication.isCurrent');
   sheet.classList.remove('isFlipped');
 
-  sheet.addEventListener('transitionend', function(event) {
+  //sheet.addEventListener('transitionend', function(event) {
+  setTimeout(function () {
     const sheets = document.querySelectorAll('.sheet--publication');
 
     for (var i = 0; i < sheets.length; i++) {
       sheets[i].classList.remove('isHidden');
     }
-  }, false);
+  }, 500);
+
+  //}, false);
 
 }
 
@@ -165,54 +183,73 @@ function populateIndex() {
   for (var i = 0; i < publications.length; i++) {
     let array = []
     const number = publications[i].querySelector('.publication__number');
-    const title = publications[i].querySelector('.publication__title');
+    let title = publications[i].querySelector('.publication__title');
     const author = publications[i].querySelector('.publication__author');
 
     //console.log(number.innerHTML);
 
+    //console.log(title);
+
+    title = title.innerHTML.replace('<br>', '');
+
+    //console.log(title);
+
+    //const br = title.querySelector('br');
+    //br.parentNode.removeChild(br);
+    //console.log(brs);
+    /*for (var i = 0; i < brs.length; i++) {
+        //brs[i].parentNode.removeChild(brs[i]);
+    }*/
+
     array.push(number.innerHTML);
-    array.push(title.innerHTML);
+    array.push(title);
     array.push(author.innerHTML);
 
     publicationsArray.push(array);
   }
 
-  //console.log(publicationsArray);
+
+  let publicationDiv = document.createElement('div');
+  for (var i = 0; i < publicationsArray.length; i++) {
+    const singlePublicationDiv = document.createElement('div');
+    singlePublicationDiv.classList.add('publication');
+
+    const numberSpan = document.createElement('span');
+    numberSpan.innerHTML = publicationsArray[i][0] + '. ';
+    singlePublicationDiv.appendChild(numberSpan);
+
+    const titleSpan = document.createElement('span');
+    titleSpan.innerHTML = publicationsArray[i][1];
+    singlePublicationDiv.appendChild(titleSpan);
+
+    const authorSpan = document.createElement('span');
+    authorSpan.innerHTML = ' – ' + publicationsArray[i][2];
+    singlePublicationDiv.appendChild(authorSpan);
+
+    publicationDiv.appendChild(singlePublicationDiv);
+  }
+
+
 
   const backsides = document.querySelectorAll('.sheet__back');
+  //console.log(backsides);
   for (var i = 0; i < backsides.length; i++) {
     const content = backsides[i].querySelector('.sheet__content');
 
+    //console.log('hej');
+
+    //console.log(content);
+
     const indexTitle = document.createElement('span');
     indexTitle.classList.add('heading--index')
-    indexTitle.innerHTML = '(Index)';
+    indexTitle.innerHTML = 'Index';
+
+    //console.log(content);
+    //console.log(publicationDiv);
 
     content.appendChild(indexTitle);
+    content.appendChild(publicationDiv.cloneNode(true));
 
-    for (var i = 0; i < publicationsArray.length; i++) {
-      const publicationDiv = document.createElement('div');
-      publicationDiv.classList.add('publication');
-
-      //console.log(publicationsArray[i][0]);
-
-      const numberSpan = document.createElement('span');
-      numberSpan.innerHTML = publicationsArray[i][0] + '. ';
-      publicationDiv.appendChild(numberSpan);
-
-      const titleSpan = document.createElement('span');
-      titleSpan.innerHTML = publicationsArray[i][1];
-      publicationDiv.appendChild(titleSpan);
-
-      const authorSpan = document.createElement('span');
-      authorSpan.innerHTML = ' – ' + publicationsArray[i][2];
-      publicationDiv.appendChild(authorSpan);
-
-      //publicationDiv.appendChild(publicationsArray[i][0]);
-      //publicationDiv.appendChild(publicationsArray[i][1]);
-      //publicationDiv.appendChild(publicationsArray[i][2]);
-
-      content.appendChild(publicationDiv);
-    }
   } 
 }
 
