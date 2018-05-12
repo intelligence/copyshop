@@ -176,6 +176,53 @@ function setupCloseIndexBtn() {
 }
 
 
+
+
+function getElementIndex(node) {
+    var index = 0;
+    while ( (node = node.previousElementSibling) ) {
+        index++;
+    }
+    return index;
+}
+
+
+function revealPreview(event) {
+  const currentSheet = event.target.closest('.sheet');
+  const indexOfSheet = getElementIndex(currentSheet);
+
+  const stack = currentSheet.closest('.stack');
+  const totalSheets = stack.children.length
+
+  const publicationID = totalSheets - indexOfSheet;
+
+  console.log(publicationID);
+}
+
+function removePreview(event) {
+
+}
+
+
+function setupPreviewBtns() {
+  const btns = document.querySelectorAll('.js-preview');
+
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('mouseenter', function(event) {
+      revealPreview(event);
+    });
+
+    btns[i].addEventListener('mouseleave', function(event) {
+      //console.log(event);
+      //console.log('left');
+      removePreview(event);
+    });
+  }  
+}
+
+
+
+
 function populateIndex() {
 
   let publicationsArray = [];
@@ -368,6 +415,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
   setupOpenIndexBtn();
   setupCloseIndexBtn();
   handleInitialLoad();
+
+  setupPreviewBtns();
 
   populateIndex();
 
