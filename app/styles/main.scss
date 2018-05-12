@@ -90,6 +90,11 @@ a {
   max-width: 100%;
 }
 
+.heading--index {
+  margin-bottom: 1rem;
+  display: block;
+}
+
 
 .sheets {
   //margin: 1rem;
@@ -240,6 +245,7 @@ a {
   transform: rotateY(-180deg);
   transition: transform 0.5s ease-in-out;
   font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
 
   .isFlipped & {
     transform: rotateY(0deg);
@@ -285,6 +291,21 @@ a {
   .sheet--publication & {
     //width: 100%;
     //text-align: center;
+  }
+}
+
+
+/*
+ * Index
+ */
+
+.publication {
+  padding: 0.85rem 0;
+  //border-top: 1px solid $black;
+  border-bottom: 1px solid $black;
+
+  &:first-of-type {
+    border-top: 1px solid $black;
   }
 }
 
