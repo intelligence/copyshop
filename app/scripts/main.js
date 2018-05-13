@@ -344,7 +344,7 @@ function handleCounts(d,resp){
 var objects = document.querySelectorAll('.sheet--publication');
 [].forEach.call(objects, function(obj) {
    if (localStorage.getItem(obj.id.split('_')[1]) !== null) {
-        document.getElementById('alreadyOwns_' + obj.id.split('_')[1]).removeAttribute('style');
+        // document.getElementById('alreadyOwns_' + obj.id.split('_')[1]).removeAttribute('style');
         document.getElementById('print_' + obj.id.split('_')[1]).setAttribute('data-link', localStorage.getItem(obj.id.split('_')[1]));
     }
 });
@@ -356,10 +356,12 @@ function printBtnListener(e){
     e.preventDefault();
     //all print btn ids should be named print_objectName
     var id = e.currentTarget.id.split('_')[1];
+    e.currentTarget.classList.add('preparing');
     //if not already downloaded
-    if (!e.currentTarget.hasAttribute('data-link'))
+    if (!e.currentTarget.hasAttribute('data-link')){
+        
         getRequest('https://r0l405b0oj.execute-api.eu-central-1.amazonaws.com/prod/link?id=' + id, id, handlePDFResponse);
-    else 
+    } else 
         handlePDFResponse(id, {link: e.currentTarget.getAttribute('data-link'), count: (100 - parseInt(document.getElementById('objectCount_'+id).innerText))}, true);
 };
 
@@ -393,6 +395,7 @@ function handlePDFResponse(id, resp, alreadyOwns = false){
 }
 
 function iframeLoadedListener(e){
+    if (document.querySelector('.preparing')) document.querySelector('.preparing').classList.remove('preparing');
     window.frames['hidden-pdf'].print();
      document.getElementById('hidden-pdf').removeEventListener('load',iframeLoadedListener);
 }

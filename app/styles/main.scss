@@ -390,7 +390,23 @@ a {
     font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     letter-spacing: 1px;
   }
+
+  &.preparing img {
+    display: none;
+  }
+
+  & .btn--print--msg {
+    position: relative;
+    top: 10px;
+    display: none;
+  }
+
+  &.preparing .btn--print--msg {
+    display: initial;
+  }
  }
+
+
 
 .btn--next {
   cursor: pointer;
