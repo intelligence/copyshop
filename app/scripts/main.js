@@ -381,7 +381,7 @@ function getRequest( url, data, callback ) {
 }
 
 function handlePDFResponse(id, resp, alreadyOwns = false){
-    var pdf = 'pdf/' + resp.link.split('_')[0] + '/' + resp.link;
+    var pdf = '/pdfs/' + id + '/' + resp.link; //resp.link.split('_')[0] + '/' + resp.link;
     var updatedCount = resp.count;
     document.getElementById('hidden-pdf').addEventListener('load', iframeLoadedListener);
     document.getElementById('hidden-pdf').src = pdf;
