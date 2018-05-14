@@ -306,6 +306,8 @@ a {
   //border-top: 1px solid $black;
   border-bottom: 1px solid $black;
 
+  cursor: pointer;
+
   &:first-of-type {
     border-top: 1px solid $black;
   }

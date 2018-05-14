@@ -223,6 +223,44 @@ function setupPreviewBtns() {
 
 
 
+function goToPublication(event) {
+  //console.log(event.target);
+  const clickedPublication = event.target.closest('.publication');
+  const indexOfPublication = getElementIndex(clickedPublication);
+
+  const currentPublication = document.querySelector('.sheet--publication.isCurrent.isFlipped');
+  console.log(currentPublication);
+
+  const sheets = document.querySelectorAll('.sheet--publication');
+  sheets[indexOfPublication].classList.add('isCurrent');
+  sheets[indexOfPublication].classList.add('isFlipped');
+  sheets[indexOfPublication].classList.remove('isHidden');
+
+  currentPublication.classList.add('isHidden');
+  currentPublication.classList.remove('isFlipped');
+  currentPublication.classList.remove('isCurrent');
+
+  setTimeout(function () {
+    closeIndex();
+  }, 50);
+
+}
+
+function setupGoToBtns() {
+  const btns = document.querySelectorAll('.js-goToPublication');
+
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function(event) {
+      //closeIndex(event);
+      goToPublication(event);
+    });
+  }  
+}
+
+
+
+
+
 function populateIndex() {
 
   let publicationsArray = [];
@@ -237,7 +275,7 @@ function populateIndex() {
 
     //console.log(title);
 
-    title = title.innerHTML.replace('<br>', '');
+    title = title.innerHTML.replace('<br>', ' ');
 
     //console.log(title);
 
@@ -260,6 +298,7 @@ function populateIndex() {
   for (var i = 0; i < publicationsArray.length; i++) {
     const singlePublicationDiv = document.createElement('div');
     singlePublicationDiv.classList.add('publication');
+    singlePublicationDiv.classList.add('js-goToPublication');
 
     const numberSpan = document.createElement('span');
     numberSpan.innerHTML = publicationsArray[i][0] + '. ';
@@ -297,7 +336,10 @@ function populateIndex() {
     content.appendChild(indexTitle);
     content.appendChild(publicationDiv.cloneNode(true));
 
-  } 
+  }
+
+    setupGoToBtns();
+ 
 }
 
 
@@ -420,6 +462,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   handleInitialLoad();
 
   setupPreviewBtns();
+
 
   populateIndex();
 
