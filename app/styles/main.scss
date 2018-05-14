@@ -226,6 +226,8 @@ a {
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
   backface-visibility: hidden;
 
+  overflow: hidden;
+
   /*.isFlipped & {
     transform: rotateY(180deg);
     transition: transform 0.5s ease-in-out;
@@ -263,6 +265,10 @@ a {
     align-items: center;
     justify-content: center;
   }
+
+  &.isHidden {
+    display: none;
+  }
 }
 
 .sheet__top {
@@ -296,6 +302,34 @@ a {
   }
 }
 
+.sheet__preview {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+
+  &.isText {
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 150px;
+
+      background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 1) 90%)
+    }    
+  }
+
+  &.isImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      mix-blend-mode: multiply;
+    }
+  }
+}
 
 /*
  * Index

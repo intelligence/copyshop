@@ -196,11 +196,42 @@ function revealPreview(event) {
 
   const publicationID = totalSheets - indexOfSheet;
 
-  console.log(publicationID);
+  //console.log(publicationID);
+
+  const preview = previewObject[publicationID];
+
+  //console.log(preview.type);
+  //console.log(preview.content);
+
+  const targetSheet = document.querySelector('.sheet--info');
+
+
+  const previewDiv = document.createElement('div');
+  previewDiv.classList.add('sheet__preview');
+
+  if(preview.type == 'text') {
+    previewDiv.innerHTML = preview.content;
+    previewDiv.classList.add('isText');
+  } else if(preview.type == 'image') {
+    //console.log('image!');
+    //console.log(preview.content);
+    const img = document.createElement('img');
+    img.classList.add('img-fluid');
+    img.src = preview.content;
+    previewDiv.appendChild(img);
+    previewDiv.classList.add('isImage');
+  }
+
+  targetSheet.querySelector('.sheet__inner').appendChild(previewDiv);
+  targetSheet.querySelector('.sheet__content').classList.add('isHidden');
 }
 
 function removePreview(event) {
+  const targetSheet = document.querySelector('.sheet--info');
+  targetSheet.querySelector('.sheet__content').classList.remove('isHidden');
 
+  const preview = targetSheet.querySelector('.sheet__preview');
+  preview.parentNode.removeChild(preview);
 }
 
 
@@ -213,8 +244,6 @@ function setupPreviewBtns() {
     });
 
     btns[i].addEventListener('mouseleave', function(event) {
-      //console.log(event);
-      //console.log('left');
       removePreview(event);
     });
   }  
@@ -251,7 +280,6 @@ function setupGoToBtns() {
 
   for (var i = 0; i < btns.length; i++) {
     btns[i].addEventListener('click', function(event) {
-      //closeIndex(event);
       goToPublication(event);
     });
   }  
