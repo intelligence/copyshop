@@ -65,6 +65,8 @@ function applyWidthAndHeight() {
 
 
 function handlePublicationBrowsing(event) {
+  //console.log(event);
+
   const currentSheet = event.target.closest('.sheet');
   let nextSheet = currentSheet.nextElementSibling;
 
@@ -75,13 +77,11 @@ function handlePublicationBrowsing(event) {
 
   currentSheet.classList.add('isMovingOffscreen');
   nextSheet.classList.add('isCurrent');
-  //currentSheet.addEventListener('transitionend', function(event) {
+
   setTimeout(function() {
     currentSheet.classList.remove('isCurrent');
     currentSheet.classList.remove('isMovingOffscreen');
   }, 500)
-
-  //}, false);
 
 }
 
@@ -189,7 +189,7 @@ function revealPreview(event) {
   const currentSheet = event.target.closest('.sheet');
   const indexOfSheet = getElementIndex(currentSheet);
 
-  const stack = currentSheet.closest('.stack__back');
+  const stack = currentSheet.closest('.stack');
   const totalSheets = stack.children.length
 
   const publicationID = totalSheets - indexOfSheet;
@@ -396,33 +396,51 @@ function handleInitialLoad() {
 
 function handleInitialLoadFlip() {
 
+  const publicationSheets = document.querySelectorAll('.sheet--publication');
+
+
+  for (var i = 0; i < publicationSheets.length; i++) {
+    publicationSheets[i].classList.add('isHidden');
+  }
+
+
+  const firstPublicationFrontContent = publicationSheets[0].querySelector('.sheet__front .sheet__content');
+  const splashSheet = document.querySelector('.sheet--splash');
+  const splashSheetBack = splashSheet.querySelector('.sheet__back');
+  splashSheetBack.appendChild(firstPublicationFrontContent.cloneNode(true));
+
+
+
   setTimeout(function (){
-    const stack = document.querySelector('.stack');
+    //const stack = document.querySelector('.stack');
     const indexBtn = document.querySelector('.js-openIndex');
 
-    stack.classList.add('isFlipped');
+    const splash = document.querySelector('.sheet--splash');
+    splash.classList.add('isFlipped');
 
     setTimeout(function () {
-      const splash = stack.querySelector('.sheet--splash');
-      splash.classList.add('isHidden');
-
-
-      const publicationSheets = document.querySelectorAll('.sheet--publication');
-      //console.log(backsides);
-      for (var i = 0; i < publicationSheets.length; i++) {
-        publicationSheets[i].classList.add('hasFlexChanged');
-      }
-
-      setTimeout(function () {
-
         indexBtn.classList.remove('isHidden');
         indexBtn.addEventListener('transitionend', function(event) {
           indexBtn.classList.remove('fade');
+
+          for (var i = 0; i < publicationSheets.length; i++) {
+            publicationSheets[i].classList.remove('isHidden');
+          }
+
+          //splashSheet.getElementById('')
+          //var id = e.currentTarget.id.split('_')[1];
+          const id = publicationSheets[0].id.split('_')[1];
+          const clonedObjectCount = document.getElementById('objectCount_' + id);
+          const realObjectCount = publicationSheets[0].querySelector('#objectCount_' + id);
+
+          //console.log(clonedObjectCount.innerHTML);
+          realObjectCount.innerHTML = clonedObjectCount.innerHTML;
+          publicationSheets[0].classList.add('isCurrent');
+
+          splash.parentNode.removeChild(splash);
+
         }, false);
-
-        }, 250);
-
-    }, 250);
+    }, 500);
   }, 2000);
 
 }
@@ -438,7 +456,6 @@ function handleInitialLoadFlip() {
 function handleCounts(d,resp){
     for (var i=0;i<resp.length;i++){
         var curObject = document.getElementById('objectCount_' + resp[i].item_id);
-        console.log(curObject);
         if (curObject)
             updateCount(resp[i].item_id,resp[i].count);
     }
