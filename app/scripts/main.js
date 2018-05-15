@@ -445,13 +445,16 @@ function handleCounts(d,resp){
 }
 
 // check if user already has downloaded piece and update accordingly
-var objects = document.querySelectorAll('.sheet--publication');
-[].forEach.call(objects, function(obj) {
-   if (localStorage.getItem(obj.id.split('_')[1]) !== null) {
-        // document.getElementById('alreadyOwns_' + obj.id.split('_')[1]).removeAttribute('style');
-        document.getElementById('print_' + obj.id.split('_')[1]).setAttribute('data-link', localStorage.getItem(obj.id.split('_')[1]));
-    }
-});
+
+/* REMOVE UNTIL AFTER VERNISSAGE*/
+
+// var objects = document.querySelectorAll('.sheet--publication');
+// [].forEach.call(objects, function(obj) {
+//    if (localStorage.getItem(obj.id.split('_')[1]) !== null) {
+//         // document.getElementById('alreadyOwns_' + obj.id.split('_')[1]).removeAttribute('style');
+//         document.getElementById('print_' + obj.id.split('_')[1]).setAttribute('data-link', localStorage.getItem(obj.id.split('_')[1]));
+//     }
+// });
 
 
 
