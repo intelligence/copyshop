@@ -96,6 +96,31 @@ a {
 }
 
 
+.mobileNotice {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 1000;
+
+  //display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+
+  letter-spacing: 1px;
+  background-color: $black;
+
+  display: none;
+
+  @media (max-width: 992px) {
+    display: flex;
+  }
+}
+
 .sheets {
   //margin: 1rem;
 
@@ -316,7 +341,8 @@ a {
       left: 0;
       height: 150px;
 
-      background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 1) 90%)
+      //background: linear-gradient(to bottom, transparent 0%, rgba(250, 250, 250, 1) 90%)
+      background: linear-gradient(rgba(255, 255, 255, 0), rgba(250, 250, 250, 1) 86%)
     }    
   }
 
