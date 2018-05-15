@@ -152,7 +152,6 @@ function closeIndex() {
   const sheet = document.querySelector('.sheet--publication.isCurrent');
   sheet.classList.remove('isFlipped');
 
-  //sheet.addEventListener('transitionend', function(event) {
   setTimeout(function () {
     const sheets = document.querySelectorAll('.sheet--publication');
 
@@ -161,7 +160,6 @@ function closeIndex() {
     }
   }, 500);
 
-  //}, false);
 
 }
 
@@ -191,7 +189,7 @@ function revealPreview(event) {
   const currentSheet = event.target.closest('.sheet');
   const indexOfSheet = getElementIndex(currentSheet);
 
-  const stack = currentSheet.closest('.stack');
+  const stack = currentSheet.closest('.stack__back');
   const totalSheets = stack.children.length
 
   const publicationID = totalSheets - indexOfSheet;
@@ -253,25 +251,27 @@ function setupPreviewBtns() {
 
 
 function goToPublication(event) {
-  //console.log(event.target);
   const clickedPublication = event.target.closest('.publication');
   const indexOfPublication = getElementIndex(clickedPublication);
 
   const currentPublication = document.querySelector('.sheet--publication.isCurrent.isFlipped');
-  console.log(currentPublication);
-
   const sheets = document.querySelectorAll('.sheet--publication');
-  sheets[indexOfPublication].classList.add('isCurrent');
-  sheets[indexOfPublication].classList.add('isFlipped');
-  sheets[indexOfPublication].classList.remove('isHidden');
 
-  currentPublication.classList.add('isHidden');
-  currentPublication.classList.remove('isFlipped');
-  currentPublication.classList.remove('isCurrent');
+
+  if(currentPublication != sheets[indexOfPublication]) {
+    sheets[indexOfPublication].classList.add('isCurrent');
+    sheets[indexOfPublication].classList.add('isFlipped');
+    sheets[indexOfPublication].classList.remove('isHidden');
+
+    currentPublication.classList.add('isHidden');
+    currentPublication.classList.remove('isFlipped');
+    currentPublication.classList.remove('isCurrent');
+  }
+
 
   setTimeout(function () {
     closeIndex();
-  }, 50);
+  }, 75);
 
 }
 
@@ -394,6 +394,44 @@ function handleInitialLoad() {
 }
 
 
+function handleInitialLoadFlip() {
+
+  setTimeout(function (){
+    const stack = document.querySelector('.stack');
+    const indexBtn = document.querySelector('.js-openIndex');
+
+    stack.classList.add('isFlipped');
+
+    setTimeout(function () {
+      const splash = stack.querySelector('.sheet--splash');
+      splash.classList.add('isHidden');
+      indexBtn.classList.remove('isHidden');
+      indexBtn.addEventListener('transitionend', function(event) {
+        indexBtn.classList.remove('fade');
+      }, false);
+    }, 500);
+
+    /*stack.addEventListener('transitionend', function(event) {
+
+    }, false);*/
+
+    /*const currentSheet = splash.closest('.sheet');
+    let nextSheet = currentSheet.nextElementSibling;
+
+    currentSheet.classList.add('isMovingOffscreen');
+    nextSheet.classList.add('isCurrent');
+    currentSheet.addEventListener('transitionend', function(event) {
+      currentSheet.parentNode.removeChild(currentSheet);
+      indexBtn.classList.remove('isHidden');
+      indexBtn.addEventListener('transitionend', function(event) {
+        indexBtn.classList.remove('fade');
+      }, false);
+    }, false);*/
+  }, 2000);
+
+}
+
+
 
 
 
@@ -487,12 +525,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
   setupPublicationBtns();
   setupOpenIndexBtn();
   setupCloseIndexBtn();
-  handleInitialLoad();
-
   setupPreviewBtns();
 
-
   populateIndex();
+
+  // handleInitialLoad();
+  handleInitialLoadFlip();
 
   var printButtons = document.querySelectorAll('.js-printPublication');
   [].forEach.call(printButtons, function(btn) {

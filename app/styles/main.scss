@@ -74,6 +74,8 @@ p {
 .text--sans-serif {
   font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   letter-spacing: 1px;
+  font-size: 1.325vw;
+  color: $black;
 }
 
 a {
@@ -180,6 +182,42 @@ a {
   position: relative;
 }
 
+.stack {
+  transform-style: preserve-3d;
+}
+
+.stack__front,
+.stack__back {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.stack__front {
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+  transition: transform 0.5s ease-in-out;
+
+  .isFlipped & {
+    transform: rotateY(180deg);
+  }
+}
+
+.stack__back {
+  transform: rotateY(-180deg);
+  transition: transform 0.5s ease-in-out;
+
+  .isFlipped & {
+    transform: rotateY(0deg);
+  }
+}
+
 .sheet--info {
   justify-content: flex-end;
   letter-spacing: 1px;
@@ -189,7 +227,7 @@ a {
 .sheet--splash {
   font-family: 'Life', 'Times New Roman', Times, serif;
   font-variant: lining-nums;
-  line-height: 1.28;
+  line-height: 1.2;
 
   justify-content: flex-start;
 
@@ -212,6 +250,11 @@ a {
     transition: transform 0.4s ease-in-out;
     transform: translateX(110%) scale(1.05);
   }
+}
+
+.sheet--publication {
+  font-size: 1.45vw;
+  color: #000;
 }
 
 
@@ -265,7 +308,7 @@ a {
   transform: rotateY(0deg);
   transition: transform 0.5s ease-in-out;
 
-  .isFlipped & {
+  .sheet--publication.isFlipped & {
     transform: rotateY(180deg);
   }
 }
@@ -276,7 +319,7 @@ a {
   font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   letter-spacing: 1px;
 
-  .isFlipped & {
+  .sheet--publication.isFlipped & {
     transform: rotateY(0deg);
   }
 }
@@ -320,6 +363,8 @@ a {
   left: 0;
 
   user-select: none;
+  font-size: 1.325vw;
+  color: $black;
 
   .sheet--publication & {
     //width: 100%;
@@ -362,7 +407,7 @@ a {
  */
 
 .publication {
-  padding: 0.85rem 0;
+  padding: 0.85rem 0 0.75rem;
   //border-top: 1px solid $black;
   border-bottom: 1px solid $black;
 
