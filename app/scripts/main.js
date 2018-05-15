@@ -345,7 +345,7 @@ function populateIndex() {
 
 
 
-  const backsides = document.querySelectorAll('.sheet__back');
+  const backsides = document.querySelectorAll('.sheet--publication .sheet__back');
   //console.log(backsides);
   for (var i = 0; i < backsides.length; i++) {
     const content = backsides[i].querySelector('.sheet__content');
@@ -405,28 +405,24 @@ function handleInitialLoadFlip() {
     setTimeout(function () {
       const splash = stack.querySelector('.sheet--splash');
       splash.classList.add('isHidden');
-      indexBtn.classList.remove('isHidden');
-      indexBtn.addEventListener('transitionend', function(event) {
-        indexBtn.classList.remove('fade');
-      }, false);
-    }, 500);
 
-    /*stack.addEventListener('transitionend', function(event) {
 
-    }, false);*/
+      const publicationSheets = document.querySelectorAll('.sheet--publication');
+      //console.log(backsides);
+      for (var i = 0; i < publicationSheets.length; i++) {
+        publicationSheets[i].classList.add('hasFlexChanged');
+      }
 
-    /*const currentSheet = splash.closest('.sheet');
-    let nextSheet = currentSheet.nextElementSibling;
+      setTimeout(function () {
 
-    currentSheet.classList.add('isMovingOffscreen');
-    nextSheet.classList.add('isCurrent');
-    currentSheet.addEventListener('transitionend', function(event) {
-      currentSheet.parentNode.removeChild(currentSheet);
-      indexBtn.classList.remove('isHidden');
-      indexBtn.addEventListener('transitionend', function(event) {
-        indexBtn.classList.remove('fade');
-      }, false);
-    }, false);*/
+        indexBtn.classList.remove('isHidden');
+        indexBtn.addEventListener('transitionend', function(event) {
+          indexBtn.classList.remove('fade');
+        }, false);
+
+        }, 250);
+
+    }, 250);
   }, 2000);
 
 }

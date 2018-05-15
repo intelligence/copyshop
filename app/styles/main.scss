@@ -187,6 +187,13 @@ a {
   transform-style: preserve-3d;
 }
 
+.stack__inner {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
 .stack__front,
 .stack__back {
   position: absolute;
@@ -197,6 +204,8 @@ a {
 
   backface-visibility: hidden;
   transform-style: preserve-3d;
+
+  //background: red;
 }
 
 .stack__front {
@@ -256,6 +265,20 @@ a {
 .sheet--publication {
   font-size: 1.45vw;
   color: #000;
+  justify-content: flex-end;
+  //justify-content: flex-start;
+
+  /*.isFlipped & {
+    justify-content: flex-start;
+  }*/
+
+  &.hasFlexChanged {
+    justify-content: flex-start;
+  }
+}
+
+.sheet--splash {
+  //background: red;
 }
 
 
@@ -442,7 +465,7 @@ a {
 }
 
 .icon--print {
-  width: 2.25rem;
+  width: 2.5vw;
 }
 
 /*
@@ -475,15 +498,16 @@ a {
   position: relative;
   cursor: pointer;
   pointer-events: auto;
-  font-size: 1.2rem;
-  padding: 0 0.75rem;
+  font-size: 1.25vw;
+  padding: 0 0.75vw;
 
   &:before {
     content: '(';
     //left: -0.85rem;
     left: 0;
-    top: 9px;
+    top: 50%;
     position: absolute;
+    transform: translateY(-50%);
     
     font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     letter-spacing: 1px;
@@ -493,8 +517,9 @@ a {
     content: ')';
     //right: -0.85rem;
     right: 0;
-    top: 9px;
+    top: 50%;
     position: absolute;
+    transform: translateY(-50%);
 
     font-family: 'HaasUnicaRegular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     letter-spacing: 1px;
