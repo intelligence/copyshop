@@ -480,6 +480,9 @@ function printBtnListener(e){
     e.preventDefault();
     //all print btn ids should be named print_objectName
     var id = e.currentTarget.id.split('_')[1];
+    var _pdf = document.getElementById('hidden-pdf');
+    if (_pdf.src) _pdf.src = '';
+    
     e.currentTarget.classList.add('preparing');
     //if not already downloaded
     if (!e.currentTarget.hasAttribute('data-link')){
@@ -514,7 +517,8 @@ function handlePDFResponse(id, resp, alreadyOwns = false){
     updateCount(id, updatedCount);
     if (!alreadyOwns) {
         localStorage.setItem(id, resp.link);
-        document.getElementById('print_' + id).setAttribute('data-link', resp.link);
+        /* UNCOMMENT WHEN LIVE */
+        // document.getElementById('print_' + id).setAttribute('data-link', resp.link);
     }
 }
 
