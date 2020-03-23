@@ -316,7 +316,9 @@ function populateIndex() {
 
     array.push(number.innerHTML);
     array.push(title);
-    array.push(author.innerHTML);
+    if(author) { 
+      array.push(author.innerHTML);
+    }
 
     publicationsArray.push(array);
   }
@@ -336,9 +338,11 @@ function populateIndex() {
     titleSpan.innerHTML = publicationsArray[i][1];
     singlePublicationDiv.appendChild(titleSpan);
 
-    const authorSpan = document.createElement('span');
-    authorSpan.innerHTML = ' – ' + publicationsArray[i][2];
-    singlePublicationDiv.appendChild(authorSpan);
+    if(publicationsArray[i][2]) {
+      const authorSpan = document.createElement('span');
+      authorSpan.innerHTML = ' – ' + publicationsArray[i][2];
+      singlePublicationDiv.appendChild(authorSpan);
+    }
 
     publicationDiv.appendChild(singlePublicationDiv);
   }
@@ -429,12 +433,12 @@ function handleInitialLoadFlip() {
 
           //splashSheet.getElementById('')
           //var id = e.currentTarget.id.split('_')[1];
-          const id = publicationSheets[0].id.split('_')[1];
-          const clonedObjectCount = document.getElementById('objectCount_' + id);
-          const realObjectCount = publicationSheets[0].querySelector('#objectCount_' + id);
+          // const id = publicationSheets[0].id.split('_')[1];
+          // const clonedObjectCount = document.getElementById('objectCount_' + id);
+          // const realObjectCount = publicationSheets[0].querySelector('#objectCount_' + id);
 
           //console.log(clonedObjectCount.innerHTML);
-          realObjectCount.innerHTML = clonedObjectCount.innerHTML;
+          // realObjectCount.innerHTML = clonedObjectCount.innerHTML;
           publicationSheets[0].classList.add('isCurrent');
 
           splash.parentNode.removeChild(splash);
@@ -486,10 +490,13 @@ function printBtnListener(e){
     e.currentTarget.classList.add('preparing');
     //if not already downloaded
     if (!e.currentTarget.hasAttribute('data-link')){
-        
-        getRequest('https://r0l405b0oj.execute-api.eu-central-1.amazonaws.com/prod/link?id=' + id, id, handlePDFResponse);
+        //console.log('yeow');
+        //getRequest('https://r0l405b0oj.execute-api.eu-central-1.amazonaws.com/prod/link?id=' + id, id, handlePDFResponse);
+        //getRequest('https://copyshop-pdfs.s3.eu-central-1.amazonaws.com/Mutual+Aid+Copyshop/Mutual+Aid+Document_Swedish.pdf', id, handlePDFResponse);
+        handlePDFResponse(id, {link: '/Mutual+Aid+Document_Swedish.pdf'}, false);
     } else 
-        handlePDFResponse(id, {link: e.currentTarget.getAttribute('data-link'), count: (100 - parseInt(document.getElementById('objectCount_'+id).innerText))}, true);
+        //handlePDFResponse(id, {link: e.currentTarget.getAttribute('data-link'), count: (100 - parseInt(document.getElementById('objectCount_'+id).innerText))}, true);
+        console.log('error');
 };
 
 
@@ -510,15 +517,19 @@ function getRequest( url, data, callback ) {
 }
 
 function handlePDFResponse(id, resp, alreadyOwns = false){
-    var pdf = '/pdfs/' + id + '/' + resp.link; //resp.link.split('_')[0] + '/' + resp.link;
-    var updatedCount = resp.count;
+    //console.log(id);
+    //console.log(resp);
+
+    //var pdf = '/pdfs/' + id + '/' + resp.link; //resp.link.split('_')[0] + '/' + resp.link;
+    var pdf = resp.link; //resp.link.split('_')[0] + '/' + resp.link;
+    //var updatedCount = resp.count;
     document.getElementById('hidden-pdf').addEventListener('load', iframeLoadedListener);
     document.getElementById('hidden-pdf').src = pdf;
-    updateCount(id, updatedCount);
+    //updateCount(id, updatedCount);
     if (!alreadyOwns) {
-        localStorage.setItem(id, resp.link);
+        //localStorage.setItem(id, resp.link);
         /* UNCOMMENT WHEN LIVE */
-        // document.getElementById('print_' + id).setAttribute('data-link', resp.link);
+        document.getElementById('print_' + id).setAttribute('data-link', resp.link);
     }
 }
 
@@ -557,7 +568,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
       btn.addEventListener('click', printBtnListener);
   });
 
-  getRequest('https://r0l405b0oj.execute-api.eu-central-1.amazonaws.com/prod/status',{},handleCounts);
+  // getRequest('https://r0l405b0oj.execute-api.eu-central-1.amazonaws.com/prod/status',{},handleCounts);
 });
 
 

@@ -278,6 +278,8 @@ a {
   }*/
 }
 
+
+
 .sheet--splash {
   font-size: 1.45vw;
   //background: red;
@@ -578,6 +580,11 @@ a {
   }
  }
 
+.btn--out-of-print:before,
+.btn--out-of-print:after {
+  display:none
+}
+
 @keyframes blink {
     0% {
       opacity: 0;
@@ -606,4 +613,9 @@ a {
 
 .btn--preview {
   cursor: pointer;
+}
+
+.publication__title {
+  display: inline-block;
+  max-width: 75%;
 }
